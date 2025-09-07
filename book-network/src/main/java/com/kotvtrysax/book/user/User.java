@@ -3,6 +3,7 @@ package com.kotvtrysax.book.user;
 import com.kotvtrysax.book.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,8 +26,12 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "_user")
 @EntityListeners(AuditingEntityListener.class)
-
 public class User implements UserDetails, Principal {
+
+    public User(String firstname, List<Role> roles){
+
+        this.roles = roles;
+    }
 
     @Id
     @GeneratedValue
@@ -96,7 +101,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    private String fullName() {
+    public String fullName() {
         return firstname + " " + lastname;
     }
 }
